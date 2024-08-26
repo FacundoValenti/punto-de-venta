@@ -55,9 +55,13 @@
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-tag"></i></div>
                                 Categorias
                             </a>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                            <a class="nav-link" href="presentaciones">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-star"></i></div>
+                                presentacion
+                            </a>
+                            <a class="nav-link" href="marcas">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-info"></i></div>
+                                Marcas
                             </a>
                         </div>
                     </div>
