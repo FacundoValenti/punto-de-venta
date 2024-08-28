@@ -79,23 +79,24 @@
                             </td>
                             <td>
                                 @if ($item->estado == 1)
-                                <span class="fw-bolder rounded p-1 bg-success text-white">Activo</span>
+                                <span class="fw-bolder p-1 rounded bg-success text-white">Activo</span>
                                 @else
-                                <span class="fw-bolder rounded p-1 bg-danger text-white">Inactivo</span>
+                                <span class="fw-bolder p-1 rounded bg-danger text-white">Inactivo</span>
                                 @endif
                             </td>
                             <td>
-                                <!-- Botón para ver detalles -->
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#vermodal-{{ $item->id }}" data-id="{{ $item->id }}">Ver</button>
                                 <!-- Botón para editar -->
                                 <a href="{{ route('productos.edit',['producto' => $item]) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                                @if ($item->estado == 1)
                                 <!-- Botón para eliminar -->
-                                <form action="{{ route('productos.destroy', $item->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?')">Eliminar</button>
-                                </form>
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmodal-{{ $item->id }}" data-id="{{ $item->id }}">Eliminar</button>
+                                @else
+                                <!-- Botón para restaurar -->
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmodal-{{ $item->id }}" data-id="{{ $item->id }}">Restaurar</button>
+                                @endif
                             </td>
+
                         </tr>
                         @endforeach
                     </tbody>
@@ -106,39 +107,28 @@
 </div>
 
 @foreach ($producto as $item)
-<!-- Modal -->
-<div class="modal fade" id="vermodal-{{ $item->id }}" tabindex="-1" aria-labelledby="vermodalLabel-{{ $item->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+<!-- Modal para eliminar/restaurar -->
+<div class="modal fade" id="confirmodal-{{ $item->id }}" tabindex="-1" aria-labelledby="confirmodalLabel-{{ $item->id }}" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="vermodalLabel-{{ $item->id }}">Detalles del Producto</h5>
+                <h5 class="modal-title" id="confirmodalLabel-{{ $item->id }}">
+                    {{ $item->estado == 1 ? 'Confirmar Eliminación' : 'Confirmar Restauración' }}
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
-                    <strong>Descripción:</strong> {{ $item->descripcion }}
-                </div>
-                <div class="mb-3">
-                    <strong>Fecha de vencimiento:</strong>
-                    {{ $item->fecha_vencimiento ? $item->fecha_vencimiento : 'No tiene' }}
-                </div>
-                <div class="mb-3">
-                    <span class="fw-bolder">Stock:</span> <span>{{ $item->stock }}</span>
-                </div>
-                <div class="row mb-3">
-                    <strong>Imagen:</strong>
-                    <div>
-                        @if ($item->img_path != null)
-                        <img src="{{ Storage::url('public/productos/' . $item->img_path) }}" alt="{{ $item->nombre }}" class="img-fluid img-thumbnail border border-4 rounded">
-                        @else
-                        <p>No hay imagen disponible</p>
-                        @endif
-                    </div>
-                </div>
+                {{ $item->estado == 1 ? '¿Estás seguro de que deseas eliminar este producto?' : '¿Estás seguro de que deseas restaurar este producto?' }}
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <form action="{{ route('productos.destroy', ['producto' => $item->id]) }}" method="post" style="display: inline;">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger">
+                        {{ $item->estado == 1 ? 'Confirmar Eliminación' : 'Confirmar Restauración' }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>
