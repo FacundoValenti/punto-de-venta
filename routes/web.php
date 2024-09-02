@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\categoriaController;
 use App\Http\Controllers\clienteController;
+use App\Http\Controllers\compraController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\presentacionController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\proveedoresController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +21,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('template');
+    return redirect('/panel');
 });
+
 
 Route::view('/panel', 'panel.index')->name('panel');
 
@@ -35,6 +38,10 @@ Route::resource('marcas', MarcaController::class);
 Route::resource('productos', ProductoController::class);
 
 route::resource('clientes',clienteController::class);
+
+route::resource('proveedores', proveedoresController::class);
+
+route::resource('compras',compraController::class);
 
 
 
