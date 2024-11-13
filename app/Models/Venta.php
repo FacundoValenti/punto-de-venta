@@ -9,6 +9,8 @@ class Venta extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function cliente(){
         return $this->belongsTo(Cliente::class);
     }
@@ -21,7 +23,10 @@ class Venta extends Model
         return $this->belongsTo(Comprobante::class);
     }
 
-    public function productos(){
-        return $this->belongsToMany(Venta::class)->withTimestamps()->wherePivot('cantidad', 'precio_venta', 'descuento');
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class)
+                    ->withPivot('cantidad', 'precio_venta', 'descuento')  // Aquí no aplicamos wherePivot
+                    ->withTimestamps();  // Si quieres mantener los timestamps
     }
 }
