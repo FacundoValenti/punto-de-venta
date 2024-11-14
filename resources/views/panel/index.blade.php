@@ -8,6 +8,23 @@
 @endpush
 
 @section('content')
+
+@if (session('success'))
+<!-- Incluye SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    let message = "{{ session('success') }}";
+    Swal.fire({
+  position: "center",
+  icon: "success",
+  title: message,
+  showConfirmButton: false,
+  timer: 1500
+});
+</script>
+@endif
+
+
 <div class="container-fluid px-4">
                         <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">

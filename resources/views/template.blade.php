@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,6 +16,8 @@
 
     @stack('css')
 </head>
+@auth
+
 <body class="sb-nav-fixed">
     <x-navigation-header />
     <div id="layoutSidenav">
@@ -34,4 +37,10 @@
     @stack('js')
 
 </body>
+@endauth
+
+@guest
+    @include('pages.401')
+@endguest
+
 </html>
