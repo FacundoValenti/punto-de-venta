@@ -3,10 +3,12 @@
 use App\Http\Controllers\categoriaController;
 use App\Http\Controllers\clienteController;
 use App\Http\Controllers\compraController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\panelController;
 use App\Http\Controllers\presentacionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\proveedoresController;
@@ -27,10 +29,14 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
     //return redirect('/panel');
 //});
-route::get('/',[homeController::class,'index'])->name('panel');
+//route::get('/',[homeController::class,'index'])->name('panel');
 
 /* Esta ruta ya no hace falta se maneja todo desde el homecontroller */
 //Route::view('/panel', 'panel.index')->name('panel');
+
+
+Route::get('/', [homeController::class, 'index'])->name('panel');
+
 
 
 
@@ -49,6 +55,10 @@ route::resource('proveedores', proveedoresController::class);
 route::resource('compras',compraController::class);
 
 route::resource('ventas', ventaController::class);
+
+route::resource('panel', panelController::class);
+
+
 
 
 

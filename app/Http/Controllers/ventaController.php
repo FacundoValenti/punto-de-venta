@@ -19,12 +19,29 @@ class ventaController extends Controller
      */
     public function index()
     {
-        $ventas = Venta::with(['comprobante','cliente.persona','user'])
-        ->where('estado',1)
-        ->latest()
-        ->get();
-        return view('venta.index', compact('ventas'));
+        // Obtener las ventas por mes
+        $ventasPorMes = DB::table('ventas')
+            ->selectRaw('EXTRACT(MONTH FROM created_at) as mes, SUM(total) as total')
+            ->where('estado', 1)  // Filtrar solo ventas activas
+            ->groupByRaw('EXTRACT(MONTH FROM created_at)')
+            ->orderBy('mes')
+            ->get();
+    
+        // Convertir a arrays simples de valores (meses y totales)
+        $meses = $ventasPorMes->pluck('mes')->toArray();  // Convertir a array simple
+        $totales = $ventasPorMes->pluck('total')->toArray();  // Convertir a array simple
+    
+        // Obtener las ventas
+        $ventas = Venta::with(['comprobante', 'cliente.persona', 'user'])
+            ->where('estado', 1)
+            ->latest()
+            ->get();
+    
+            //dd($totales, $meses);
+        // Pasar los valores de las ventas, meses y totales a la vista
+        return view('venta.index', compact('ventas', 'meses', 'totales'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -153,4 +170,6 @@ class ventaController extends Controller
 
         return redirect()->route('ventas.index')->with('success', 'Venta eliminada correctamente');
     }
+
+    
 }
