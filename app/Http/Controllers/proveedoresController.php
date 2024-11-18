@@ -52,7 +52,7 @@ class proveedoresController extends Controller
             return redirect()->back()->withErrors(['error' => 'Ocurrió un error al agregar el cliente.']);
         }
 
-        return redirect()->route('productos.index')->with('success', 'Proveedor agregado con exito');
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor agregado con exito');
     }
 
     /**
