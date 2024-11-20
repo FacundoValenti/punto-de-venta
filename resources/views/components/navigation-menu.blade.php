@@ -10,7 +10,7 @@
                 </a>
 
                 <!-- Sección Modulos -->
-                <div class="sb-sidenav-menu-heading">Modulos</div>
+                <div class="sb-sidenav-menu-heading">Acciones</div>
 
                 <!-- Enlace colapsable para Compras -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCompras" aria-expanded="false" aria-controls="collapseCompras">
