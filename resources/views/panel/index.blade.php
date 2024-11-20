@@ -48,6 +48,28 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <i class="fa-solid fa-credit-card"></i><span class="m-1">Ventas Totales</span>
+                        </div>
+                        <div class="col-4 text-center">
+                            <?php
+                            use App\Models\Venta;
+                            $clientes = count(Venta::all());
+                            ?>
+                            <p class="fw-bold fs-4">{{$clientes}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="{{ route('ventas.create') }}">Realizar una venta</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
 
         <!-- Producto -->
         <div class="col-xl-3 col-md-6 mb-4">
